@@ -11,6 +11,13 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/time', (req, res) => {
+  const date = new Date().toDateString();
+  res.send({
+    date,
+  });
+});
+
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
