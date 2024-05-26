@@ -33,11 +33,9 @@ jobs:
 
       - name: Build and push container
         uses: docker/build-push-action@v5
-        env:
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
-            "$IMAGE_NAME:${{ github.sha }}"
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
