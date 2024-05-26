@@ -24,7 +24,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Info
-        run: echo $IMAGE_NAME
+        run: |
+          echo $IMAGE_NAME
+          echo ${{ github.repository_owner }}
+          echo ${{ github.repository }}
+          echo $IMAGE_NAME:latest
 
       - name: Build and push container
         uses: docker/build-push-action@v5
