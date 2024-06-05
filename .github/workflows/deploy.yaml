@@ -47,4 +47,4 @@ jobs:
           echo $IMAGE_NAME
           echo ${{vars.WORK_DIR}}
           echo ${{vars.APP_NAME}}
-          ssh $SSH 'cd ${{vars.WORK_DIR}} && docker run -d --name ${{vars.APP_NAME}} -p 3000:3000 ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:latest'
+          ssh $SSH 'cd ${{vars.WORK_DIR}} && docker run -d --name ${{vars.APP_NAME}} -p ${{vars.APP_PORT}}:3000 ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:latest'
