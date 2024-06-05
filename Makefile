@@ -4,25 +4,23 @@ test:
 	@echo ${NAME} ${GH_USERNAME} ${GH_PAT}
 
 start:
-	docker start my-node-app
+	docker start ${CONTAINER_NAME}
 
 stop:
-	docker stop my-node-app
+	docker stop ${CONTAINER_NAME}
 
 create:
-	docker run -d -p 3000:3000 --name my-node-app ghcr.io/${APP_NAME}
+	docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
+	docker run -d -p ${PORT}:3000 --name ${CONTAINER_NAME} ghcr.io/${IMAGE_NAME}
 
 remove:
-	docker rm my-node-app
-
-buildOld:
-	docker build -t ${APP_NAME} .
+	docker rm -f ${CONTAINER_NAME}
 
 build:
-	docker build -t ghcr.io/${APP_NAME} .
+	docker build -t ghcr.io/${IMAGE_NAME} .
 
 push:
-	docker push ghcr.io/${APP_NAME}
+	docker push ghcr.io/${IMAGE_NAME}
 
 auth:
 	echo ${GH_PAT} | docker login ghcr.io -u ${GH_USERNAME} --password-stdin
