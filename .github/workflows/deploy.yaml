@@ -11,16 +11,32 @@ env:
 
 jobs:
 
-  pubclish:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Вызов Второго Workflow
-        uses: ./.github/workflows/publish.yaml
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push container
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
-    needs: pubclish
+    needs: publish
 
     steps:
       - name: Checkout code
