@@ -11,7 +11,7 @@ stop:
 
 create:
 	docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
-	docker run -d -p ${PORT}:3000 --name ${CONTAINER_NAME} ghcr.io/${IMAGE_NAME}
+	docker run -d -p ${PORT}:3000 --name ${CONTAINER_NAME}  --network ${NETWORK_NAME} ghcr.io/${IMAGE_NAME}
 
 remove:
 	docker rm -f ${CONTAINER_NAME}
@@ -27,6 +27,8 @@ auth:
 
 login:
 	docker login --username ${GH_USERNAME} --password ${GH_PAT} ghcr.io
+
+init: build create
 
 print_hello:
 	echo "Hello, world!"
