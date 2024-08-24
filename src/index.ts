@@ -5,7 +5,7 @@ console.log('start');
 const app = express();
 const port = 3000;
 
-app.get('/currencies', (req, res) => {
+app.get('/node', (req, res) => {
   res.send({
     message: 'Hello World!',
   });

@@ -11,13 +11,13 @@ stop:
 
 create:
 	docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
-	docker run -d -p ${PORT}:3000 --name ${CONTAINER_NAME} ghcr.io/${IMAGE_NAME}
+	docker run -d -p ${PORT}:3000 --name ${CONTAINER_NAME} --network ${NETWORK_NAME} ${IMAGE_NAME}
 
 remove:
 	docker rm -f ${CONTAINER_NAME}
 
 build:
-	docker build -t ghcr.io/${IMAGE_NAME} .
+	docker build -t ${IMAGE_NAME} .
 
 push:
 	docker push ghcr.io/${IMAGE_NAME}
@@ -30,3 +30,5 @@ login:
 
 print_hello:
 	echo "Hello, world!"
+
+init: build create
